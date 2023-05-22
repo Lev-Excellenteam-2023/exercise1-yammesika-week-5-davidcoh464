@@ -16,23 +16,15 @@ def join(*params, separator: str = '-') -> list:
         >>> join([1, 2, 3], [4, 5, 6])
         [1, 2, 3, '-', 4, 5, 6]
 
-        >>> join(['Hello', 'World'], ['Open', 'AI'], separator=' ')
-        ['Hello', 'World', ' ', 'Open', 'AI']
+        >>> join([1, 2], [8], [9, 5, 6], separator='@')
+        [1, 2, '@', 8, '@', 9, 5, 6]
 
     """
     if not params:
         return None
 
-    result_list = []
-    for param in params:
-        if not isinstance(param, (list, tuple)):
-            raise TypeError(f"{param} is not iterable")
-
-        result_list.extend(param)
-        result_list.append(separator)
-
-    if result_list:
-        del result_list[-1]
+    result_list = [element for param in params for element in param if isinstance(param, (list, tuple))]
+    result_list.extend([separator] * (len(params) - 1))
 
     return result_list
 
