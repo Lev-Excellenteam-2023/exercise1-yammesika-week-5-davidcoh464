@@ -1,36 +1,30 @@
-from datetime import datetime as dt
 import random
+from datetime import datetime
 
-def string_to_date(str_date):
+
+def string_to_date(str_date: str) -> datetime:
+    """
+    Converts a string date in the format 'YYYY-MM-DD' to a datetime object.
+
+    Args:
+        str_date (str): The string representation of the date.
+
+    Returns:
+        datetime: The datetime object representing the date.
+
+    Raises:
+        ValueError: If the input string is not in the correct format or represents an invalid date.
+
+    Examples:
+        >>> string_to_date('2023-05-17')
+        datetime.datetime(2023, 5, 17, 0, 0)
+
+    """
     try:
-        return dt.strptime(str_date, '%Y-%m-%d')
-    except: # Checking the type of problem
-        L = str_date.split("-")
-        
-        if len(L) != 3 or len(L[0]) != 4 or len(L[1]) > 2 or len(L[1]) == 0 or len(L[2]) > 2 or len(L[2]) == 0:
-            raise ValueError("Wrong format")
+        return datetime.strptime(str_date, '%Y-%m-%d')
+    except ValueError:
+        raise ValueError("Invalid date format: YYYY-MM-DD")
 
-        try:
-            year = int(L[0])
-        except:
-            raise Exception("The year can only contain digits without characters")
-
-        try:
-            month = int(L[1])
-        except:
-            raise Exception("The month can only contain digits without characters")
-        finally:
-            if month > 12 or month < 1:
-                raise Exception("Month should be between 1 and 12")
-
-        try:
-            day = int(L[2])
-        except:
-            raise Exception("The day can only contain digits without characters")
-        finally:
-            if day > 31 or day < 1:
-                raise Exception("Day should be between 1 and 31")
-        raise Exception("The date does not exist")
 
 def vinaigrette(start_date, end_date):
     start_date = string_to_date(start_date)
@@ -45,4 +39,6 @@ def vinaigrette(start_date, end_date):
 
     return str(random_date.date())
 
-print(vinaigrette('1912-06-23','1954-06-07'))
+
+if __name__ == "__main__":
+    print(vinaigrette('1912-06-23', '1954-06-07'))
